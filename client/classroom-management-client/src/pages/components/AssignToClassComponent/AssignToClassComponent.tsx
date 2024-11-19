@@ -15,13 +15,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useStyles } from "./AssignToClassComponent.styles";
 import { assignStudentToClass } from "../../../redux/studentSlice";
 import { SutdentsForClassProps } from "../../../interfaces/student.interface";
-import api from "../../../api/api"; 
+import api from "../../../api/api";
 import { setClasses } from "../../../redux/classesSlice";
 
 const SutdentsForClass = (props: SutdentsForClassProps) => {
   const { onClose, selectedValue, open, studentId } = props;
   const dispatch = useDispatch();
-  const classrooms = useSelector((state: RootState) => state.classes.classesData); 
+  const classrooms = useSelector((state: RootState) => state.classes.classesData);
   const classes = useStyles();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const SutdentsForClass = (props: SutdentsForClassProps) => {
     };
 
     if (classrooms.length === 0) {
-      fetchClasses(); // Only fetch if classrooms are not already loaded
+      fetchClasses(); // Fetch classes if not already loaded
     }
   }, [dispatch, classrooms.length]);
 
@@ -56,7 +56,7 @@ const SutdentsForClass = (props: SutdentsForClassProps) => {
       // Update Redux state with the new assignment
       dispatch(assignStudentToClass({ studentId, classId }));
 
-      // Decrease the seatsLeft in Redux by 1 for the assigned class
+      // Decrease seatsLeft for the assigned class
       const updatedClassrooms = classrooms.map((classItem) =>
         classItem.id === classId
           ? { ...classItem, seatsLeft: classItem.seatsLeft - 1 }
@@ -74,36 +74,34 @@ const SutdentsForClass = (props: SutdentsForClassProps) => {
     handleAssignStudentToClass(studentId, classId);
   };
 
+  // Filter classes with seatsLeft > 0
+  const availableClasses = classrooms.filter((classItem) => classItem.seatsLeft > 0);
+
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle className={classes.dialog_text}>Available Classes</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {classrooms.map((classItem) => {
-          const isClassFull = classItem.seatsLeft <= 0; // Disable if no seats left
-
-          return (
-            <ListItem className={classes.class_item} disableGutters key={classItem.id}>
-              <ListItemAvatar className={classes.list_item_avatar}>
-                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                  <SchoolIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={classItem.className} />
-              <IconButton
-                onClick={() => handleListItemClick(studentId, classItem.id)}
-                color="primary"
-                disabled={isClassFull}  // Disable if no seats left
-                title={isClassFull ? "No seats available" : "Assign student to class"}
-              >
-                <AddIcon className={classes.icon_button} />
-              </IconButton>
-            </ListItem>
-          );
-        })}
+        {availableClasses.map((classItem) => (
+          <ListItem className={classes.class_item} disableGutters key={classItem.id}>
+            <ListItemAvatar className={classes.list_item_avatar}>
+              <Avatar >
+                <SchoolIcon className={classes.schoolIcon}/>
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={classItem.className} />
+            <IconButton
+              onClick={() => handleListItemClick(studentId, classItem.id)}
+              color="primary"
+              title="Assign student to class"
+            >
+              <AddIcon className={classes.icon_button} />
+            </IconButton>
+          </ListItem>
+        ))}
       </List>
     </Dialog>
   );
 };
 
-
 export default SutdentsForClass;
+
