@@ -14,5 +14,8 @@ export const useStyles = makeStyles(() => ({
     },
     icon_button: {
         paddingLeft: "0.8rem"
+    },
+    schoolIcon: {
+        color: "#FFFFFF"
     }
 }))

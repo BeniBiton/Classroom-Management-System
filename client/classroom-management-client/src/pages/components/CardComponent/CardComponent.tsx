@@ -41,6 +41,7 @@ const StudentCard: React.FC<StudentCardProps> = ({
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+    queryClient.invalidateQueries("classes");
   };
 
   const deleteClass = useMutation(
