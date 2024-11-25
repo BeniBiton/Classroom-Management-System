@@ -6,9 +6,17 @@ interface ClassFetcherProps {
 }
 
 const ClassFetcher: React.FC<ClassFetcherProps> = ({ children }) => {
-  useFetchClasses(); // Fetch data at the root level
+  const { isLoading, error } = useFetchClasses();
 
-  return <>{children}</>; // Render children if they exist
+  if (isLoading) {
+    return <div>Loading classes...</div>; 
+  }
+
+  if (error) {
+    return <div>Error fetching classes: {String(error)}</div>; 
+  }
+
+  return <>{children}</>; 
 };
 
 export default ClassFetcher;

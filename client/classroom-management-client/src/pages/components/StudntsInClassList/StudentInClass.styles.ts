@@ -41,4 +41,5 @@ export const useStyles = makeStyles(() => ({
   deleteIcon: {
     fontSize: "1.2rem",
   },
+
 }));

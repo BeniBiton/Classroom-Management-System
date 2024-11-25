@@ -22,8 +22,7 @@ export interface IStudent {
   
   export interface SutdentsForClassProps {
     open: boolean;
-    selectedValue: string;
-    onClose: (value: string) => void;
+    onClose: () => void;
     studentId: string;
   }
 

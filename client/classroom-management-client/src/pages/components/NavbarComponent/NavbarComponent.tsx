@@ -12,19 +12,18 @@ import { useThemeContext } from "../../../themes/ThemeContext";
 
 
 const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
-  const navberStyles = useStyles();
+  const classes = useStyles();
   const { toggleTheme } = useThemeContext()
 
   return (
     <AppBar position="fixed">
       <Toolbar>
-        {/* Menu button that triggers the sidebar to open */}
         <IconButton
+          className={classes.iconButton}
           color="inherit"
           aria-label="open drawer"
-          onClick={onMenuClick} // Calls the function passed as a prop to open the sidebar
+          onClick={onMenuClick}
           edge="start"
-          sx={{ mr: 2 }}
         >
           <MenuIcon />
         </IconButton>
@@ -33,8 +32,8 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           Shob Classes
         </Typography>
         <LoyaltyIcon
-          className={navberStyles.loyalty_icon_style}
-          sx={{ fontSize: "1.2rem" }}
+          className={classes.loyalty_icon_style}
+
           onClick={toggleTheme}
         />
       </Toolbar>
