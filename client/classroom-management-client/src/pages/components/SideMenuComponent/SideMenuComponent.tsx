@@ -27,14 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
         }}
       />
       <Drawer
-        sx={{
-          width: 144,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: 144,
-            boxSizing: "border-box",
-          },
-        }}
+        className={classes.drawer}
         variant="persistent"
         anchor="left"
         open={open}

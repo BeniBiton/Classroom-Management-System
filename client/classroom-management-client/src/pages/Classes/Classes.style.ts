@@ -7,6 +7,9 @@ export const useStyles = makeStyles(() => ({
     padding: "5rem",
     paddingLeft: "1.8rem"
   },
+  box: {
+    flexGrow: "1 !important"
+  }
 }));
 
 

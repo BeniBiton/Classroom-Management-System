@@ -1,23 +1,22 @@
-import * as React from "react";
 import api from "../../../api/api";
 import List from "@mui/material/List";
 import Dialog from "@mui/material/Dialog";
 import Avatar from "@mui/material/Avatar";
+import { useEffect, useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import IconButton from "@mui/material/IconButton";
+import { useStyles } from "./StudentInClass.styles";
 import DialogTitle from "@mui/material/DialogTitle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import { useMutation, useQueryClient } from "react-query";
-import { StudentProps } from "../../../interfaces/student.interface";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
 import { useThemeContext } from "../../../themes/ThemeContext";
-import { useStyles } from "./StudentInClass.styles";
-import { useEffect } from "react";
+import { StudentProps } from "../../../interfaces/student.interface";
 
 const StudentsForClass = ({ open, onClose, students }: StudentProps) => {
-  const [localStudents, setLocalStudents] = React.useState(students);
+  const [localStudents, setLocalStudents] = useState(students);
   const queryClient = useQueryClient();
   const { isBlueTheme } = useThemeContext();
   const classes = useStyles();

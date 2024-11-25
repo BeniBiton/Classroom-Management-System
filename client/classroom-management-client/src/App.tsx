@@ -1,10 +1,10 @@
 import React from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import store from "./redux/store";
 import Router from "./routes/Router";
 import { Provider } from "react-redux";
-import store from "./redux/store";
-import ClassFetcher from "./pages/components/ClassFetcher/ClassFetcher";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProviderWithContext } from "./themes/ThemeContext";
+import ClassFetcher from "./pages/components/ClassFetcher/ClassFetcher";
 
 const queryClient = new QueryClient();
 

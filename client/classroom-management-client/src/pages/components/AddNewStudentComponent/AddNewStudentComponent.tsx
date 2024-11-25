@@ -1,40 +1,43 @@
-import api from "../../../api/api";
-import Box from "@mui/material/Box";
 import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useMutation, useQueryClient } from "react-query";
 
+import api from "../../../api/api";
+
+// Function to add a new student via API
 const addStudent = async (newStudent: {
   id: string;
   firstName: string;
   lastName: string;
   age: number;
   profession: string;
-}) => {
+}): Promise<void> => {
   const response = await api.post("/students", newStudent);
   return response.data;
 };
 
-const AddStudentForm = () => {
+const AddStudentForm: React.FC = () => {
   const queryClient = useQueryClient();
 
-  const [id, setId] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState(0);
-  const [profession, setProfession] = useState("");
+  const [id, setId] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [age, setAge] = useState<number>(0);
+  const [profession, setProfession] = useState<string>("");
+
 
   const mutation = useMutation(addStudent, {
     onSuccess: () => {
       queryClient.invalidateQueries(["classes"]);
     },
     onError: (error) => {
-      console.error("Error creating class:", error);
+      console.error("Error creating student:", error);
     },
   });
 
-  const handSumbit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
     mutation.mutate({ id, firstName, lastName, age, profession });
   };
@@ -42,7 +45,7 @@ const AddStudentForm = () => {
   return (
     <Box
       component="form"
-      onSubmit={handSumbit}
+      onSubmit={handleSubmit}
       sx={{
         display: "flex",
         flexDirection: "column",

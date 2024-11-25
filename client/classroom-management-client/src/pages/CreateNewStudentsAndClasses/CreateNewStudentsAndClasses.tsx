@@ -17,18 +17,11 @@ const CreateNewStudentsAndClasses = () => {
     <Box>
       <Sidebar open={isSideBarOpen} onClose={handleMenuClick} />
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-around",
-          padding: 2,
-          height: "100vh",
-          backgroundColor: "#f9f9f9",
-        }}
+        className={classes.box}
       >
         <Navbar onMenuClick={handleMenuClick} />
         <Box
           className={classes.formsContainer}
-          sx={{ width: "50%", maxWidth: "500px" }}
         >
           <h2 className={classes.headline}>Create new class</h2>
           <CreateClassForm />
@@ -36,7 +29,6 @@ const CreateNewStudentsAndClasses = () => {
 
         <Box
           className={classes.formsContainer}
-          sx={{ width: "50%", maxWidth: "500px" }}
         >
           <h2 className={classes.headline}>Add new student</h2>
           <AddStudentForm />

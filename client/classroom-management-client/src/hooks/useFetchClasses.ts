@@ -13,10 +13,12 @@ const fetchClasses = async () => {
 export const useFetchClasses = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  useQuery("classes", fetchClasses, {
+  const query = useQuery("classes", fetchClasses, {
     onSuccess: (data) => {
-      dispatch(setClasses(data));
+      dispatch(setClasses(data)); // Sync to Redux on successful fetch
     },
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false, // Disable refetch on window focus for efficiency
   });
+
+  return query; // Return query state
 };

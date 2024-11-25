@@ -1,15 +1,11 @@
-import api from "../../../api/api";
 import { useState } from "react";
+import api from "../../../api/api";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useMutation, useQueryClient } from "react-query";
 
-const addClass = async (newClass: {
-  id: string;
-  className: string;
-  totalPlaces: number;
-}) => {
+const addClass = async (newClass: { id: string; className: string; totalPlaces: number }) => {
   const response = await api.post("/classes", newClass);
   return response.data;
 };
@@ -17,28 +13,30 @@ const addClass = async (newClass: {
 const CreateClassForm = () => {
   const queryClient = useQueryClient();
 
-  const [id, setId] = useState("");
-  const [className, setClassName] = useState("");
-  const [totalPlaces, setTotalPlaces] = useState(0);
+  const [formData, setFormData] = useState({
+    id: "",
+    className: "",
+    totalPlaces: 0,
+  });
 
   const mutation = useMutation(addClass, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["classes"]);
+      queryClient.invalidateQueries("classes");
     },
     onError: (error) => {
       console.error("Error creating class:", error);
     },
   });
 
-  const handSumbit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    mutation.mutate({ id, className, totalPlaces });
+    mutation.mutate(formData); 
   };
 
   return (
     <Box
       component="form"
-      onSubmit={handSumbit}
+      onSubmit={handleSubmit}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -51,25 +49,27 @@ const CreateClassForm = () => {
       <TextField
         required
         id="id"
-        label="id"
+        label="ID"
         variant="outlined"
-        onChange={(e) => setId(e.target.value)}
+        value={formData.id}
+        onChange={(e) => setFormData((prev) => ({ ...prev, id: e.target.value }))}
       />
       <TextField
         required
         id="className"
-        label="Class-name"
+        label="Class Name"
         variant="outlined"
-        onChange={(e) => setClassName(e.target.value)}
+        value={formData.className}
+        onChange={(e) => setFormData((prev) => ({ ...prev, className: e.target.value }))}
       />
-
       <TextField
         required
-        id="max-seats"
+        id="totalPlaces"
         label="Max Seats"
         variant="outlined"
         type="number"
-        onChange={(e) => setTotalPlaces(parseInt(e.target.value))}
+        value={formData.totalPlaces}
+        onChange={(e) => setFormData((prev) => ({ ...prev, totalPlaces: parseInt(e.target.value) }))}
       />
       <Button
         type="submit"
