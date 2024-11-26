@@ -2,7 +2,7 @@
 import React, { createContext, useState, useContext } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-const blueTheme = createTheme({
+export const blueTheme = createTheme({
   palette: {
     primary: {
       main: "#3f50b5", // Blue
@@ -10,7 +10,7 @@ const blueTheme = createTheme({
   },
 });
 
-const redTheme = createTheme({
+export const redTheme = createTheme({
   palette: {
     primary: {
       main: "#f44336", // Red

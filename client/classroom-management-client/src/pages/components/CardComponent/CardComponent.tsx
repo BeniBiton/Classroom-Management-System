@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "react-query";
 import { setStudents } from "../../../redux/studentSlice";
 import api, { handleStudentsByClass } from "../../../api/api";
-import { useThemeContext } from "../../../themes/ThemeContext";
+import { useThemeContext, redTheme, blueTheme } from "../../../themes/ThemeContext";
 import { StudentCardProps } from "../../../interfaces/student.interface";
 import StudentsListInClass from "../StudntsInClassList/StudentsInClassList";
 
@@ -26,6 +26,9 @@ const StudentCard: React.FC<StudentCardProps> = ({
   const queryClient = useQueryClient();
   const { isBlueTheme } = useThemeContext();
   const [openDialog, setOpenDialog] = useState(false);
+
+  const currentTheme = isBlueTheme ? blueTheme : redTheme
+  const iconColor = currentTheme.palette.primary.main
 
   const students = useSelector((state: RootState) =>
     state.students.studentsData.filter((student) => student.classId === classId)
@@ -92,7 +95,7 @@ const StudentCard: React.FC<StudentCardProps> = ({
           <DeleteIcon
             onClick={() => deleteClassMutation.mutate(classId)}
             sx={{
-              color: isBlueTheme ? "#3f50b5" : "#f44336",
+              color: iconColor,
               cursor: "pointer",
             }}
           />
